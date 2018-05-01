@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: d67e777879578c743a82c6bb295c21c6
-timeCreated: 1525059434
+guid: 6079a9bca5ab26940895c094c4cc2f27
+timeCreated: 1525119276
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Helicopter_0
-    21300002: Helicopter_1
+    21300000: Explosion2_0
+    21300002: Explosion2_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -83,7 +83,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Helicopter_0
+      name: Explosion2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -97,7 +97,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Helicopter_1
+      name: Explosion2_1
       rect:
         serializedVersion: 2
         x: 16
