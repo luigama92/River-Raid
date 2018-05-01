@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
 
     [SerializeField]
-    float
+    int
         defaultSpeed,                      //velocida de movimento
         horizontalSpeed,                   //velocidade lateral
         negativeSpeed,                          //velocida diminuida quando "freia"
@@ -13,10 +14,10 @@ public class Player : MonoBehaviour {
 
     float speed;                           //velocidade atual
 
-    [SerializeField]
-    float maxFuel, fuelConsumptionRate;    //O maximo de combustivel e a velocidade que vai sendo consumido
-    float fuel;                            //Quantiade atual de conbustivel
-    
+    int maxFuel = 62;                 //O maximo de combustivel (de acordo com o tamanho do hud)
+    int fuelConsumptionRate = 2;      //Velocidade que vai sendo consumido a cada segundo
+    int fuel;                         //Quantiade atual de conbustivel
+    public Image fuelPointer;
 
     public GameObject missile;
     [HideInInspector]
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour {
     void Awake()
     {
         fuel = maxFuel;
+        StartCoroutine("ConsumeFuel");
 
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -68,10 +70,48 @@ public class Player : MonoBehaviour {
         anim.Play("Exploding");
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    IEnumerator ConsumeFuel()
     {
-        Debug.Log(other.name);
-        Explode();
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            if (fuel > 0)
+            {
+                fuel -= fuelConsumptionRate;
+                fuelPointer.rectTransform.Translate(-fuelConsumptionRate, 0, 0);
+            }
+            else
+                Explode();
+        }
     }
 
+    IEnumerator Refuel()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.25f);
+            if (fuel < maxFuel)
+            {
+                fuel += fuelConsumptionRate;
+                fuelPointer.rectTransform.Translate(fuelConsumptionRate, 0, 0);
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Fuel"))
+            StartCoroutine("Refuel");
+        else
+            Explode();
+
+        if (other.CompareTag("Enemy"))
+            other.GetComponent<Enemy>().Explode();
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Fuel"))
+            StopCoroutine("Refuel");
+    }
 }

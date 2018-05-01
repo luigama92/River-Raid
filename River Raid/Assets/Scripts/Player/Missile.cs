@@ -26,5 +26,8 @@ public class Missile : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other)
     {
         gameObject.SetActive(false);
+
+        if (other.CompareTag("Enemy"))
+            other.GetComponent<Enemy>().Explode();
     }
 }

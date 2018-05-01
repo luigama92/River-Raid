@@ -5,6 +5,6 @@ using UnityEngine;
 public class RoundPosition : MonoBehaviour {
     
 	void LateUpdate () {
-            transform.position = new Vector3(Mathf.Ceil(transform.position.x), Mathf.Ceil(transform.position.y), transform.position.z);
+            transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), transform.position.z);
     }
 }
