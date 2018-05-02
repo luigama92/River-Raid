@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameManager: MonoBehaviour{
@@ -9,6 +10,9 @@ public class GameManager: MonoBehaviour{
     public Text textScore;
     public static int reserveJets = 3;          //jatos reservas (vidas)
     public static int dificulty = 1;
+
+    [SerializeField]
+    Transform mapsParent;
 
     [SerializeField]
     GameObject  currentMap;
@@ -38,6 +42,7 @@ public class GameManager: MonoBehaviour{
     void Awake()
     {
         instance = this;
+        score = 0;
     }
 
     void Start()
@@ -54,9 +59,9 @@ public class GameManager: MonoBehaviour{
         int r = Random.Range(0, instance.brightMaps.Length);
         instance.topMap = ((instance.mapIndex % 2) == 0) ? instance.darkMaps[r] : instance.brightMaps[r];
         if ((instance.mapIndex % 2) == 0)
-            instance.topMap = Instantiate(instance.darkMaps[r]);
+            instance.topMap = Instantiate(instance.darkMaps[r],mapsParent);
         else
-            instance.topMap = Instantiate(instance.brightMaps[r]);
+            instance.topMap = Instantiate(instance.brightMaps[r], mapsParent);
 
         instance.topMap.transform.position = new Vector3(instance.topMap.transform.position.x, instance.currentMap.transform.position.y + 128 * 8, instance.topMap.transform.position.z);
     }
@@ -72,21 +77,17 @@ public class GameManager: MonoBehaviour{
         int r = Random.Range(0, instance.brightMaps.Length);
         instance.topMap = ((instance.mapIndex % 2) == 0) ? instance.darkMaps[r]: instance.brightMaps[r];
         if((instance.mapIndex % 2) == 0)
-            instance.topMap = Instantiate(instance.darkMaps[r]);
+            instance.topMap = Instantiate(instance.darkMaps[r], instance.mapsParent);
         else
-            instance.topMap = Instantiate(instance.brightMaps[r]);
+            instance.topMap = Instantiate(instance.brightMaps[r], instance.mapsParent);
 
         instance.topMap.transform.position = new Vector3(instance.topMap.transform.position.x, instance.currentMap.transform.position.y + 128 * 8, instance.topMap.transform.position.z);
     }
 
     public static void Reset()
     {
-
+        SceneManager.LoadScene(0);
     }
-
-    public static void GameOver()
-    {
-
-    }
+    
 
 }

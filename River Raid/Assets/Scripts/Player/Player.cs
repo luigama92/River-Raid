@@ -124,4 +124,9 @@ public class Player : MonoBehaviour {
             StartCoroutine("ConsumeFuel");
         }
     }
+
+    void RestartGame()
+    {
+        GameManager.Reset();
+    }
 }

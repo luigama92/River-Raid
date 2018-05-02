@@ -21,7 +21,7 @@ public class Missile : MonoBehaviour {
             rb.velocity = Vector2.up * (speed + Player.instance.rb.velocity.y);
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         gameObject.SetActive(false);
         
