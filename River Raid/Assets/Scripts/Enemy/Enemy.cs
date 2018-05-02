@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour {
+public abstract class Enemy : MonoBehaviour, IShootable {
 
 
     [SerializeField]
     protected int speed;
-    public int pointValue;
+    [SerializeField]
+    int pointValue;
 
     protected Rigidbody2D rb;
     Animator anim;
@@ -33,7 +34,7 @@ public abstract class Enemy : MonoBehaviour {
         anim.Play("Exploding");
     }
 
-    void Deactivate()
+    public void Deactivate()
     {
         gameObject.SetActive(false);
     }

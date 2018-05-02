@@ -24,8 +24,11 @@ public class Player : MonoBehaviour {
     public Rigidbody2D rb;
     Animator anim;
 
+    public static Player instance;
+
     void Awake()
     {
+        instance = this;
         fuel = maxFuel;
         StartCoroutine("ConsumeFuel");
 
@@ -89,7 +92,7 @@ public class Player : MonoBehaviour {
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
             if (fuel < maxFuel)
             {
                 fuel += fuelConsumptionRate;
@@ -101,7 +104,11 @@ public class Player : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Fuel"))
+        {
             StartCoroutine("Refuel");
+            StopCoroutine("ConsumeFuel");
+
+        }
         else
             Explode();
 
@@ -112,6 +119,9 @@ public class Player : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Fuel"))
+        {
             StopCoroutine("Refuel");
+            StartCoroutine("ConsumeFuel");
+        }
     }
 }
