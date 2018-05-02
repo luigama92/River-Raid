@@ -22,6 +22,7 @@ public class EnemyInAir : Enemy
 
     IEnumerator CheckIfIsOnScreen()
     {
+        //assim q sai da tela, reaparece do outro lado
         while (enabled)
         {
             if (transform.position.x > rightEdge)
