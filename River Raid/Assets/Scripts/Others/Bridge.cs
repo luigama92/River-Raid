@@ -14,6 +14,8 @@ public class Bridge : MonoBehaviour, IShootable {
         GetComponent<Animator>().Play("Exploding");
         Camera.main.GetComponent<Animator>().Play("Exploding",0,0);
         GetComponent<Collider2D>().enabled = false;
+
+        GameManager.GenerateMap();
     }
 
     public void Deactivate()
